@@ -1,0 +1,7 @@
+Name: IIS_TLC_HTTPDATE
+Sample: 2018-06-05 12:00:00
+Pattern: %{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{HOUR}:%{MINUTE}:%{SECOND}	
+
+Name: IIS_TLC_URLPARAM
+Sample: Type=1&Money=18.00
+Pattern: [A-Za-z0-9$.+!*'|(){},~@#%&/=:;_?\-\[\]<>]*

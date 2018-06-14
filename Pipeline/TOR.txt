@@ -1,0 +1,21 @@
+rule "Tor exit nodes"
+when
+  has_field("SrcIP")
+then
+  let intel = tor_lookup(to_string($message.SrcIP));
+  set_field("SrcIP_TOR_exit_node", intel.threat_indicated);
+end
+
+when
+  has_field("DstIP")
+then
+  let intel = tor_lookup(to_string($message.DstIP));
+  set_field("DstIP_TOR_exit_node", intel.threat_indicated);
+end
+
+when
+  has_field("HTTPXFIP")
+then
+  let intel = tor_lookup(to_string($message.HTTPXFIP));
+  set_field("HTTPXFIP_TOR_exit_node", intel.threat_indicated);
+end

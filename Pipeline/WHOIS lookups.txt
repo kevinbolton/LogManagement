@@ -1,0 +1,21 @@
+rule "WHOIS lookups"
+when
+  has_field("SrcIP")
+then
+  let ThreatIntelligence_whois_intel_SrcIP = whois_lookup_ip(to_string($message.SrcIP), "src_addr");
+  set_fields(ThreatIntelligence_whois_intel_SrcIP);
+end
+
+when
+  has_field("DstIP")
+then
+  let ThreatIntelligence_whois_intel_DstIP = whois_lookup_ip(to_string($message.DstIP), "dst_addr");
+  set_fields(ThreatIntelligence_whois_intel_DstIP);
+end
+
+when
+  has_field("HTTPXFIP")
+then
+  let ThreatIntelligence_whois_intel_HTTPXFIP = whois_lookup_ip(to_string($message.HTTPXFIP), "HTTPXFIP");
+  set_fields(ThreatIntelligence_whois_intel_HTTPXFIP);
+end

@@ -1,0 +1,18 @@
+rule "Global/combined threat feed lookup"
+when
+  has_field("SrcIP")
+then
+  set_fields(threat_intel_lookup_ip(to_string($message.SrcIP), "SrcIP"));
+end
+
+when
+  has_field("DstIP")
+then
+  set_fields(threat_intel_lookup_ip(to_string($message.DstIP), "DstIP"));
+end
+
+when
+  has_field("HTTPXFIP")
+then
+  set_fields(threat_intel_lookup_ip(to_string($message.HTTPXFIP), "HTTPXFIP"));
+end

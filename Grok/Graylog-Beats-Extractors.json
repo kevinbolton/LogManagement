@@ -1,0 +1,61 @@
+{
+  "extractors": [
+    {
+      "title": "Windows firewall",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 3,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "%{GREEDYDATA:Date} %{GREEDYDATA:Time} %{WORD:Action} %{WORD:Protocol} %{IP:SrcIP} %{IP:DstIP} %{INT:SrcPort} %{INT:DstPort} %{INT:PacketSize} %{GREEDYDATA:TCPFlags} %{GREEDYDATA:TCPSyn} %{GREEDYDATA:TCPAck} %{GREEDYDATA:TCPWin} %{GREEDYDATA:ICMPType} %{GREEDYDATA:ICMPCode} %{GREEDYDATA:Info} %{GREEDYDATA:Path}"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "CDN-TLC",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "\\[%{HTTPDATE:EventTS}\\]‘%{IPV4:SrcIP}–%{GREEDYDATA:RemoteUser}\\[(?:-|%{BASE10NUM:RequestSecond})\\]\\[(?:-|%{BASE10NUM:ResponseSecond})\\]-“%{GREEDYDATA:HTTPMethod} %{GREEDYDATA:HTTPURI} HTTP/%{BASE10NUM:HTTPVersion}”‘‘\\[%{BASE10NUM:HTTPStatusCode}\\]%{BASE10NUM:HTTPBodyBytes}“%{GREEDYDATA:HTTPReferer}”‘‘”%{GREEDYDATA:HTTPAgent}”(?:-|%{IPV4:HTTPXFIP})’"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "IIS-TLC",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 1,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "%{IIS_TLC_HTTPDATE} %{WORD:IISSite} %{NOTSPACE:ServerName} %{IPORHOST:ServerIP} %{GREEDYDATA:HTTPMethod} %{GREEDYDATA:HTTPURI} %{GREEDYDATA:HTTPURIPARAM} %{NUMBER:DestPort} %{GREEDYDATA:HTTPUser} %{IPORHOST:Client} HTTP/%{BASE10NUM:HTTPVersion} %{GREEDYDATA:UserAgent} %{GREEDYDATA:HTTPReferer} %{IPORHOST:ServerFQDN} %{BASE10NUM:ResponseCode} %{BASE10NUM:SubResponseCode} %{BASE10NUM:Win32Status} %{BASE10NUM:SendBytes} %{BASE10NUM:ReceivedBytes} %{BASE10NUM:Timetaken}"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "Nginx-UNS",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 2,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "%{IPORHOST:clientip} - %{USER:clientuser} \\[%{HTTPDATE:req_date}\\] %{NUMBER:request_time:float} \\\"(?:%{IPORHOST:host}|_)\\\" \\\"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\\\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{QS:referrer} %{QS:agent} %{QS:http_x_forwarded_for}"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    }
+  ],
+  "version": "2.4.3"
+}

@@ -1,0 +1,27 @@
+rule "OTX"
+when
+  has_field("SrcIP")
+then
+  let intel = otx_lookup_ip(to_string($message.SrcIP));
+  set_field("SrcIP_OTX_indicated", intel.otx_threat_indicated);
+  set_field("SrcIP_OTX_ids", intel.otx_threat_ids);
+  set_field("SrcIP_OTX_names", intel.otx_threat_names);
+end
+
+when
+  has_field("DstIP")
+then
+  let intel = otx_lookup_ip(to_string($message.DstIP));
+  set_field("DstIP_OTX_indicated", intel.otx_threat_indicated);
+  set_field("DstIP_OTX_ids", intel.otx_threat_ids);
+  set_field("DstIP_OTX_names", intel.otx_threat_names);
+end
+
+when
+  has_field("HTTPXFIP")
+then
+  let intel = otx_lookup_ip(to_string($message.HTTPXFIP));
+  set_field("HTTPXFIP_OTX_indicated", intel.otx_threat_indicated);
+  set_field("HTTPXFIP_OTX_ids", intel.otx_threat_ids);
+  set_field("HTTPXFIP_OTX_names", intel.otx_threat_names);
+end

@@ -1,0 +1,12 @@
+rule "Parse event timestamp"
+when
+  has_field("EventTS")
+then
+  set_field("timestamp", parse_date(to_string($message.EventTS), "dd/MMM/yyyy:HH:mm:ss Z"));
+end
+
+when
+  has_field("IIS_TLC_HTTPDATE")
+then
+  set_field("timestamp", parse_date(to_string($message.IIS_TLC_HTTPDATE), "yyyy-MM-dd HH:mm:ss"));
+end

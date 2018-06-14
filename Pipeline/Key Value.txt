@@ -1,0 +1,44 @@
+rule "Key Value"
+
+when
+  has_field("HTTPURI")
+then
+  set_fields(
+             fields: 
+			        key_value(
+                        value: to_string($message.HTTPURI),
+                        delimiters: "&",
+                        kv_delimiters: "=",
+                        handle_dup_keys: ","
+                        ),
+             prefix: "HTTPURI_KV_"
+  );
+end
+
+when
+  has_field("HTTPReferer")
+then
+  set_fields(
+             fields: key_value(
+                         value: to_string($message.HTTPReferer),
+                         delimiters: "&",
+                         kv_delimiters: "=",
+                         handle_dup_keys: ","
+                         ),
+             prefix: "HTTPReferer_KV_"
+  );
+end
+
+when
+  has_field("IIS_TLC_URLPARAM")
+then
+  set_fields(
+             fields: key_value(
+                         value: to_string($message.IIS_TLC_URLPARAM),
+                         delimiters: "&",
+                         kv_delimiters: "=",
+                         handle_dup_keys: ","
+                         ),
+             prefix: "IIS_TLC_URLPARAM_KV_"
+  );
+end
