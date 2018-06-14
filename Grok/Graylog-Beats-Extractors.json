@@ -15,20 +15,6 @@
       "condition_value": ""
     },
     {
-      "title": "CDN-TLC",
-      "extractor_type": "grok",
-      "converters": [],
-      "order": 0,
-      "cursor_strategy": "copy",
-      "source_field": "message",
-      "target_field": "",
-      "extractor_config": {
-        "grok_pattern": "\\[%{HTTPDATE:EventTS}\\]‘%{IPV4:SrcIP}–%{GREEDYDATA:RemoteUser}\\[(?:-|%{BASE10NUM:RequestSecond})\\]\\[(?:-|%{BASE10NUM:ResponseSecond})\\]-“%{GREEDYDATA:HTTPMethod} %{GREEDYDATA:HTTPURI} HTTP/%{BASE10NUM:HTTPVersion}”‘‘\\[%{BASE10NUM:HTTPStatusCode}\\]%{BASE10NUM:HTTPBodyBytes}“%{GREEDYDATA:HTTPReferer}”‘‘”%{GREEDYDATA:HTTPAgent}”(?:-|%{IPV4:HTTPXFIP})’"
-      },
-      "condition_type": "none",
-      "condition_value": ""
-    },
-    {
       "title": "IIS-TLC",
       "extractor_type": "grok",
       "converters": [],
@@ -52,6 +38,20 @@
       "target_field": "",
       "extractor_config": {
         "grok_pattern": "%{IPORHOST:clientip} - %{USER:clientuser} \\[%{HTTPDATE:req_date}\\] %{NUMBER:request_time:float} \\\"(?:%{IPORHOST:host}|_)\\\" \\\"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\\\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{QS:referrer} %{QS:agent} %{QS:http_x_forwarded_for}"
+      },
+      "condition_type": "none",
+      "condition_value": ""
+    },
+    {
+      "title": "CDN-TLC",
+      "extractor_type": "grok",
+      "converters": [],
+      "order": 0,
+      "cursor_strategy": "copy",
+      "source_field": "message",
+      "target_field": "",
+      "extractor_config": {
+        "grok_pattern": "\\[%{HTTPDATE:EventTS}\\]‘%{IPV4:SrcIP}–%{GREEDYDATA:RemoteUser}\\[(?:-|%{BASE10NUM:RequestSecond})\\]\\[(?:-|%{BASE10NUM:ResponseSecond})\\]-“%{GREEDYDATA:HTTPMethod} %{GREEDYDATA:HTTPURI} HTTP/%{BASE10NUM:HTTPVersion}”‘‘\\[%{BASE10NUM:HTTPStatusCode}\\]%{BASE10NUM:HTTPBodyBytes}“%{GREEDYDATA:HTTPReferer}”‘‘”%{GREEDYDATA:HTTPAgent}”(?:%{IPV4:HTTPXFIP}|-)’"
       },
       "condition_type": "none",
       "condition_value": ""
